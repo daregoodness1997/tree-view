@@ -20,7 +20,6 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   const handleExpandedItemsChange = (
-    event: React.SyntheticEvent,
     itemIds: string[]
   ) => {
     setExpandedItems(itemIds);
