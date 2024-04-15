@@ -3,29 +3,29 @@ import { TreeNode } from "types";
 export const treeData: TreeNode[] = [
   {
     id: "1",
-    label: "Main",
+    label: "NBA",
     status: "admin",
     children: [
-      { id: "2", label: "Hello" },
+      { id: "2", label: "2023/2024" },
       {
         id: "3",
-        label: "Subtree with children",
+        label: "MVPs",
         children: [
-          { id: "6", label: "Hello" },
+          { id: "6", label: "Jovic" },
           {
             id: "7",
-            label: "Sub-subtree with children",
+            label: "Luka",
             children: [
-              { id: "9", label: "Child 1" },
-              { id: "10", label: "Child 2" },
-              { id: "11", label: "Child 3" },
+              { id: "9", label: "SGA" },
+              { id: "10", label: "Tatum" },
+              { id: "11", label: "Gianis" },
             ],
           },
-          { id: "8", label: "Hello" },
+          { id: "8", label: "Point Guard" },
         ],
       },
-      { id: "4", label: "World" },
-      { id: "5", label: "Something something" },
+      { id: "4", label: "Curry" },
+      { id: "5", label: "Hali" },
     ],
   },
 ];

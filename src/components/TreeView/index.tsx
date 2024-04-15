@@ -163,7 +163,7 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
             overflowX: "hidden",
             minHeight: 270,
             flexGrow: 1,
-            minWidth: 300,
+            minWidth: 330,
           }}
         >
           {renderTreeItems(filteredData)}
