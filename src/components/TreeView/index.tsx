@@ -17,7 +17,7 @@ interface Props {
 const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [expandedItems, setExpandedItems] = useState<string[]>(["1", "3"]);
 
   const handleExpandedItemsChange = (
     event: React.SyntheticEvent,
@@ -92,7 +92,6 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
           aria-label="customized"
           expandedItems={expandedItems}
           onExpandedItemsChange={handleExpandedItemsChange}
-          defaultExpandedItems={["1", "3"]}
           slots={{
             expandIcon: hideIcon ? NullIcon : ExpandIcon,
             collapseIcon: hideIcon ? NullIcon : CollapseIcon,
