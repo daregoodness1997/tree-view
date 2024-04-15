@@ -6,7 +6,14 @@ import {
   ExpandIcon,
   CustomTreeItem,
 } from "./components";
-import { Box, Button, Chip, CircularProgress, Input } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  CircularProgress,
+  Input,
+  Stack,
+} from "@mui/material";
 import { TreeNode } from "types";
 import { filterTreeData, extractIds } from "../../utils";
 
@@ -42,19 +49,53 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
     }, 500);
   };
 
+  const Node: React.FC<{
+    label: string;
+    value: string;
+  }> = ({ label, value = 0 }) => {
+    return (
+      <Stack direction={"row"} fontSize={"0.8rem"} gap={"2px"}>
+        <Stack
+          alignItems={"center"}
+          justifyContent={"center"}
+          width={"20px"}
+          height={"20px"}
+          border={"0.4px solid grey"}
+          borderRadius={"4px"}
+        >
+          {label}
+        </Stack>
+        <Stack
+          alignItems={"center"}
+          justifyContent={"center"}
+          width={"20px"}
+          height={"20px"}
+          border={"0.4px solid grey"}
+          borderRadius={"4px"}
+        >
+          {value}
+        </Stack>
+      </Stack>
+    );
+  };
+
   const ItemLabel: React.FC<{
     label: string;
     status?: "admin" | "currency";
   }> = ({ label, status = "primary" }) => {
     return (
-      <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
-        <Chip
-          label={status === "admin" ? "Admin" : "Currency"}
-          color={status === "admin" ? "error" : "primary"}
-          size="small"
-        />
-        {label}
-      </Box>
+      <Stack direction={"row"} gap={"6px"} justifyContent={"space-between"}>
+        <Stack direction={"row"} gap={"6px"}>
+          <Chip
+            label={status === "admin" ? "Admin" : "Currency"}
+            color={status === "admin" ? "error" : "primary"}
+            size="small"
+          />
+          {label}
+        </Stack>
+
+        <Node label="10" value="0" />
+      </Stack>
     );
   };
 
@@ -64,8 +105,9 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
         key={item.id}
         itemId={item.id}
         label={<ItemLabel label={item.label} status={item.status} />}
+        style={{ opacity: item.children ? 1 : 0.6 }}
       >
-        {item.children && renderTreeItems(item.children)}{" "}
+        {item.children && renderTreeItems(item.children)}
       </CustomTreeItem>
     ));
   };
