@@ -21,3 +21,14 @@ export const filterTreeData = (data: TreeNode[], query: string): TreeNode[] => {
     return acc;
   }, []);
 };
+ 
+export const extractIds = (nodes: TreeNode[]): string[] => {
+  let ids: string[] = [];
+  nodes.forEach((node) => {
+    ids.push(node.id);
+    if (node.children) {
+      ids = ids.concat(extractIds(node.children));
+    }
+  });
+  return ids;
+};

@@ -6,9 +6,9 @@ import {
   ExpandIcon,
   CustomTreeItem,
 } from "./components";
-import { Box, CircularProgress, Input } from "@mui/material";
+import { Box, Button, CircularProgress, Input } from "@mui/material";
 import { TreeNode } from "types";
-import { filterTreeData } from "../../utils";
+import { filterTreeData, extractIds } from "../../utils";
 
 interface Props {
   treeData: TreeNode[];
@@ -17,7 +17,20 @@ interface Props {
 const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  //   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+
+  const handleExpandedItemsChange = (
+    event: React.SyntheticEvent,
+    itemIds: string[]
+  ) => {
+    setExpandedItems(itemIds);
+  };
+
+  const handleExpandClick = () => {
+    setExpandedItems((oldExpanded) =>
+      oldExpanded.length === 0 ? extractIds(treeData) : []
+    );
+  };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
@@ -55,13 +68,29 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
           value={searchQuery}
           onChange={handleSearchChange}
         />
+        <Box>
+          <Button onClick={handleExpandClick}>
+            {expandedItems.length === 0 ? "Expand all" : "Collapse all"}
+          </Button>
+        </Box>
       </Box>
 
       {isLoading ? (
-        <CircularProgress />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          py={8}
+        >
+          <CircularProgress />
+        </Box>
       ) : (
         <SimpleTreeView
           aria-label="customized"
+          expandedItems={expandedItems}
+          onExpandedItemsChange={handleExpandedItemsChange}
           defaultExpandedItems={["1", "3"]}
           slots={{
             expandIcon: hideIcon ? NullIcon : ExpandIcon,
