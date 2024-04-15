@@ -6,7 +6,7 @@ import {
   ExpandIcon,
   CustomTreeItem,
 } from "./components";
-import { Box, Button, CircularProgress, Input } from "@mui/material";
+import { Box, Button, Chip, CircularProgress, Input } from "@mui/material";
 import { TreeNode } from "types";
 import { filterTreeData, extractIds } from "../../utils";
 
@@ -42,10 +42,30 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
     }, 500);
   };
 
+  const ItemLabel: React.FC<{
+    label: string;
+    status?: "admin" | "currency";
+  }> = ({ label, status = "primary" }) => {
+    return (
+      <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
+        <Chip
+          label={status === "admin" ? "Admin" : "Currency"}
+          color={status === "admin" ? "error" : "primary"}
+          size="small"
+        />
+        {label}
+      </Box>
+    );
+  };
+
   const renderTreeItems = (items: TreeNode[]): React.ReactNode[] => {
     return items.map((item) => (
-      <CustomTreeItem key={item.id} itemId={item.id} label={item.label}>
-        {item.children && renderTreeItems(item.children)}
+      <CustomTreeItem
+        key={item.id}
+        itemId={item.id}
+        label={<ItemLabel label={item.label} status={item.status} />}
+      >
+        {item.children && renderTreeItems(item.children)}{" "}
       </CustomTreeItem>
     ));
   };
@@ -101,7 +121,7 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
             overflowX: "hidden",
             minHeight: 270,
             flexGrow: 1,
-            maxWidth: 300,
+            minWidth: 300,
           }}
         >
           {renderTreeItems(filteredData)}

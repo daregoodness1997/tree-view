@@ -4,6 +4,7 @@ export const treeData: TreeNode[] = [
   {
     id: "1",
     label: "Main",
+    status: "admin",
     children: [
       { id: "2", label: "Hello" },
       {
