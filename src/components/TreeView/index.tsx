@@ -1,27 +1,30 @@
 import React, { FC, useState, memo } from "react";
-import { SimpleTreeView } from "@mui/x-tree-view/SimpleTreeView";
-import {
-  CollapseIcon,
-  EndIcon,
-  ExpandIcon,
-  CustomTreeItem,
-} from "./components";
+import { CustomTreeItem } from "./components";
 import {
   Box,
   Button,
-  Chip,
   CircularProgress,
   Input,
   Stack,
+  Typography,
 } from "@mui/material";
 import { TreeNode } from "types";
 import { filterTreeData, extractIds } from "../../utils";
+import { RichTreeView } from "@mui/x-tree-view";
+import EmptyIcon from "./components/emty-icon";
 
 interface Props {
   treeData: TreeNode[];
   hideIcon?: boolean;
 }
-const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
+
+declare module "react" {
+  interface CSSProperties {
+    "--tree-view-color"?: string;
+    "--tree-view-bg-color"?: string;
+  }
+}
+const TreeView: FC<Props> = ({ treeData }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>(["1", "3"]);
@@ -49,71 +52,7 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
     }, 500);
   };
 
-  const Node: React.FC<{
-    label: string;
-    value: string;
-  }> = ({ label, value = 0 }) => {
-    return (
-      <Stack direction={"row"} fontSize={"0.8rem"} gap={"2px"}>
-        <Stack
-          alignItems={"center"}
-          justifyContent={"center"}
-          width={"20px"}
-          height={"20px"}
-          border={"0.4px solid grey"}
-          borderRadius={"4px"}
-        >
-          {label}
-        </Stack>
-        <Stack
-          alignItems={"center"}
-          justifyContent={"center"}
-          width={"20px"}
-          height={"20px"}
-          border={"0.4px solid grey"}
-          borderRadius={"4px"}
-        >
-          {value}
-        </Stack>
-      </Stack>
-    );
-  };
-
-  const ItemLabel: React.FC<{
-    label: string;
-    status?: "admin" | "currency";
-  }> = ({ label, status = "primary" }) => {
-    return (
-      <Stack direction={"row"} gap={"6px"} justifyContent={"space-between"}>
-        <Stack direction={"row"} gap={"6px"}>
-          <Chip
-            label={status === "admin" ? "Admin" : "Currency"}
-            color={status === "admin" ? "error" : "primary"}
-            size="small"
-          />
-          {label}
-        </Stack>
-
-        <Node label="10" value="0" />
-      </Stack>
-    );
-  };
-
-  const renderTreeItems = (items: TreeNode[]): React.ReactNode[] => {
-    return items.map((item) => (
-      <CustomTreeItem
-        key={item.id}
-        itemId={item.id}
-        label={<ItemLabel label={item.label} status={item.status} />}
-        style={{ opacity: item.children ? 1 : 0.6 }}
-      >
-        {item.children && renderTreeItems(item.children)}
-      </CustomTreeItem>
-    ));
-  };
   const filteredData = filterTreeData(treeData, searchQuery);
-
-  const NullIcon = () => null;
 
   return (
     <>
@@ -132,8 +71,8 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
           onChange={handleSearchChange}
         />
         <Box>
-          <Button onClick={handleExpandClick}>
-            {expandedItems.length === 0 ? "Expand all" : "Collapse all"}
+          <Button variant="contained" onClick={handleExpandClick}>
+            {expandedItems.length === 0 ? "Unfold" : "Fold"}
           </Button>
         </Box>
       </Box>
@@ -150,24 +89,28 @@ const TreeView: FC<Props> = ({ treeData, hideIcon = false }) => {
           <CircularProgress />
         </Box>
       ) : (
-        <SimpleTreeView
-          aria-label="customized"
-          expandedItems={expandedItems}
-          onExpandedItemsChange={handleExpandedItemsChange}
-          slots={{
-            expandIcon: hideIcon ? NullIcon : ExpandIcon,
-            collapseIcon: hideIcon ? NullIcon : CollapseIcon,
-            endIcon: hideIcon ? NullIcon : EndIcon,
-          }}
-          sx={{
-            overflowX: "hidden",
-            minHeight: 270,
-            flexGrow: 1,
-            minWidth: 330,
-          }}
-        >
-          {renderTreeItems(filteredData)}
-        </SimpleTreeView>
+        <>
+          {filteredData.length > 0 ? (
+            <RichTreeView
+              items={filteredData}
+              aria-label="tree-view"
+              defaultExpandedItems={["1", "1.1"]}
+              defaultSelectedItems="1.1"
+              expandedItems={expandedItems}
+              onExpandedItemsChange={handleExpandedItemsChange}
+              sx={{
+                height: "fit-content",
+                flexGrow: 1,
+              }}
+              slots={{ item: CustomTreeItem }}
+            />
+          ) : (
+            <Stack alignItems={"center"} justifyContent={"center"} p={6}>
+              <EmptyIcon />
+              <Typography>There are no records to show</Typography>
+            </Stack>
+          )}
+        </>
       )}
     </>
   );
