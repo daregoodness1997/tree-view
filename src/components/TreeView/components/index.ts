@@ -1,4 +1,5 @@
-import CustomTreeItem from "./TreeItem";
+import TreeItem from "./TreeItem";
 import { ExpandIcon, CollapseIcon, EndIcon } from "./Icons";
+import CustomTreeItem from "./CustomTreeItem";
 
-export { CustomTreeItem, ExpandIcon, CollapseIcon, EndIcon };
+export { TreeItem, ExpandIcon, CollapseIcon, EndIcon, CustomTreeItem };

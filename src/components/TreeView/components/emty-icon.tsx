@@ -1,0 +1,72 @@
+const EmptyIcon = () => {
+  return (
+    <svg
+      width="172"
+      height="151"
+      viewBox="0 0 172 151"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="93.4784" cy="74.7281" r="70.603" stroke="#CCCCCC" />
+      <path
+        d="M104.525 57.9531L171.216 76.7739L164.261 150.829L84.4772 130.781L104.525 57.9531Z"
+        fill="#D2D2D2"
+      />
+      <path
+        d="M170.807 76.3647L100.843 58.3623C97.4335 63.272 88.6505 75.9556 80.7949 87.4117C72.9393 98.8678 59.2465 112.915 53.3821 118.507L135.211 142.646C136.712 141.828 143.067 135.855 156.487 118.507C169.907 101.159 171.625 83.1838 170.807 76.3647Z"
+        fill="#F3F3F3"
+        stroke="#CCCCCC"
+        stroke-width="0.818293"
+      />
+      <circle cx="106.98" cy="77.5922" r="3.27317" fill="#C4C4C4" />
+      <circle cx="97.1607" cy="94.7763" r="3.27317" fill="#C4C4C4" />
+      <circle cx="87.3412" cy="110.324" r="3.27317" fill="#C4C4C4" />
+      <circle
+        cx="41.2164"
+        cy="40.4327"
+        r="29.8586"
+        transform="rotate(25.8347 41.2164 40.4327)"
+        fill="#F0F0F0"
+        stroke="#D2D2D2"
+        stroke-width="0.818293"
+      />
+      <rect
+        width="16.3659"
+        height="2.45488"
+        transform="matrix(1 0 0 -1 31.806 49.0247)"
+        fill="#C4C4C4"
+      />
+      <circle cx="24.0323" cy="35.5229" r="4.50061" fill="#C4C4C4" />
+      <circle cx="55.9457" cy="35.5229" r="4.50061" fill="#C4C4C4" />
+      <rect
+        x="105.524"
+        y="97.601"
+        width="39.2781"
+        height="1.63659"
+        rx="0.818293"
+        transform="rotate(15.5 105.524 97.601)"
+        fill="#C4C4C4"
+      />
+      <rect
+        x="96.957"
+        y="114.184"
+        width="35.5522"
+        height="1.63659"
+        rx="0.818293"
+        transform="rotate(15.5 96.957 114.184)"
+        fill="#C4C4C4"
+      />
+      <rect
+        x="116.306"
+        y="80.0842"
+        width="39.2781"
+        height="1.63659"
+        rx="0.818293"
+        transform="rotate(14.5 116.306 80.0842)"
+        fill="#C4C4C4"
+      />
+    </svg>
+  );
+};
+
+export default EmptyIcon;
